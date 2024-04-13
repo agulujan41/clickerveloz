@@ -128,7 +128,7 @@ while True:
         pantallaPerdiste = Etiqueta(0,0,500,500,ROJO)
         pantallaPerdiste.cambiar_texto("¡¡¡Perdiste!!!",40,NEGRO)
         pantallaPerdiste.dibujar(80,180)
-        etiquetaVolverJugar = Etiqueta(180,450,2GI00,100,AMARILLO)
+        etiquetaVolverJugar = Etiqueta(180,450,200,100,AMARILLO)
         etiquetaVolverJugar.cambiar_texto("Volver a Jugar",20,NEGRO)
         etiquetaVolverJugar.dibujar(10,10)
     pygame.display.update()
