@@ -19,3 +19,4 @@ tamanio = len(listaNombres)
 print("El primero de la lista",listaNombres[0])
 print("En el medio de la lista esta",listaNombres[tamanio//2])
 print("El ultimo de la lista",listaNombres[tamanio-1])
+

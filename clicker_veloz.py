@@ -45,6 +45,19 @@ etiquetas = []
 numero_tarjetas = 4
 
 x = 70
+contador_tiempo = Etiqueta(10,10,50,50,color_fondo)
+contador_tiempo.cambiar_texto("Tiempo:",20,NEGRO)
+cronometro = Etiqueta(100,10,50,50,color_fondo)
+cronometro.cambiar_texto("0",20,NEGRO)
+
+contador_puntaje = Etiqueta(450,10,50,50,color_fondo)
+contador_puntaje.cambiar_texto("Contar:",20,NEGRO)
+puntaje_etiqueta = Etiqueta(450,10,50,50,color_fondo)
+puntaje_etiqueta.cambiar_texto("0",20,NEGRO)
+
+tiempo_inicio = time.time()
+tiempo_actual = time.time()
+
 
 for i in range (numero_tarjetas):
     nueva_etiqueta = Etiqueta(x,170,70,100,AMARILLO)
@@ -55,7 +68,7 @@ for i in range (numero_tarjetas):
 
 
 esperar = 0 
-
+puntos = 0
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -66,9 +79,14 @@ while True:
             for i in range(0,numero_tarjetas):
                 if etiquetas[i].estaClickeando(x,y):
                     if (i+1) == click:
-                         etiquetas[i].cambiarColor(VERDE)
+                        etiquetas[i].cambiarColor(VERDE)
+                        puntos= puntos +1
+                        puntaje_etiqueta.cambiar_texto(str(puntos),20,NEGRO)
                     else:
                         etiquetas[i].cambiarColor(ROJO)
+                        puntos = puntos -1 
+                        puntaje_etiqueta.cambiar_texto(str(puntos),20,NEGRO)
+
                     etiquetas[i].rellenar()
             
     if esperar == 0:
@@ -83,7 +101,35 @@ while True:
     else:
         esperar = esperar - 1
 
-    
+    contador_tiempo.dibujar(0,0)
+    cronometro.dibujar(0,0)
+    contador_puntaje.dibujar(-80,0)
+    puntaje_etiqueta.dibujar(10,0)
 
+    nuevo_tiempo = time.time()
+    if nuevo_tiempo -tiempo_inicio >=11:
+        pantallaTimeOver = Etiqueta(0,0,500,500,ROJO)
+        pantallaTimeOver.cambiar_texto("¡¡¡Tiempo terminado!!!",40,NEGRO)
+        pantallaTimeOver.dibujar(20,180)
+
+        
+    if int(nuevo_tiempo)-int(tiempo_actual) == 1:
+        cronometro.cambiar_texto(str(int(nuevo_tiempo-tiempo_inicio)),20,NEGRO)
+        tiempo_actual = nuevo_tiempo
+
+    if puntos >= 5 :
+        pantallaGanaste = Etiqueta(0,0,500,500,VERDE)
+        pantallaGanaste.cambiar_texto("¡¡¡Ganaste!!!",40,NEGRO)
+        pantallaGanaste.dibujar(80,180)
+
+        
+
+    if puntos <= -5:
+        pantallaPerdiste = Etiqueta(0,0,500,500,ROJO)
+        pantallaPerdiste.cambiar_texto("¡¡¡Perdiste!!!",40,NEGRO)
+        pantallaPerdiste.dibujar(80,180)
+        etiquetaVolverJugar = Etiqueta(180,450,2GI00,100,AMARILLO)
+        etiquetaVolverJugar.cambiar_texto("Volver a Jugar",20,NEGRO)
+        etiquetaVolverJugar.dibujar(10,10)
     pygame.display.update()
     clock.tick(40)
